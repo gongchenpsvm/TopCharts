@@ -21,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG,"onCreate:starting Asynctask");
         DownloadData downloadData = new DownloadData();
-        downloadData.execute("URL place holder");
-        Log.d(TAG,"onCreate:done");
+        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=10/xml");
+        //Pass to doInBackground() and downloadXML()
+        Log.d(TAG,"onCreate:done");//NOTE print before downloadData above finished
     }
     private class DownloadData extends AsyncTask<String, Void, String>{
         private static final String TAG = "DownloadData";
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             if (rssFeed == null){
                 Log.e(TAG,"doInBackgroud: Error downloading");
             }
-            return "doInBackgroud completed ";
+            return "doInBackgroud completed ";//Return to onPostExecute
         }
         private String downloadXML(String urlPath){
             StringBuilder xmlResult = new StringBuilder();
@@ -56,19 +57,21 @@ public class MainActivity extends AppCompatActivity {
                 char [] inputBuffer = new char [500];
                 while (true){
                     charsRead = reader.read(inputBuffer);
-                    if (charsRead < 0 ) {
+                    if (charsRead < 0 ) {//If end of input stream reached, charsRead = -1
                         break;
                     }
                     if (charsRead > 0 ) {
                         xmlResult.append(String.copyValueOf(inputBuffer, 0 , charsRead));
                     }
                 }
-                reader.close();
+                reader.close();//Close both InputStreamReader and InputStream
+                return xmlResult.toString();
             } catch(MalformedURLException e){
                 Log.e(TAG,"downloadXML: Invalid URL " + e.getMessage());
             } catch(IOException e){
                 Log.e(TAG, "downloadURL: IO Exception reading data: " + e.getMessage());
             }
+            return null;//If null return, prompt error.
         }
     }
 }
