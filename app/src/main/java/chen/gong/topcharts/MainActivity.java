@@ -35,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            Log.d(TAG, "doInBackgroud:starts with " + strings[0]);
+            Log.d(TAG, "doInBackground:starts with " + strings[0]);
             String rssFeed = downloadXML(strings[0]);
             if (rssFeed == null){
-                Log.e(TAG,"doInBackgroud: Error downloading");
+                Log.e(TAG,"doInBackground: Error downloading");
             }
-            return "doInBackgroud completed ";//Return to onPostExecute
+            return rssFeed;//Return to onPostExecute
         }
         private String downloadXML(String urlPath){
             StringBuilder xmlResult = new StringBuilder();
