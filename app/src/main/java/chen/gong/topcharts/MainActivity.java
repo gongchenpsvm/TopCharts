@@ -1,8 +1,8 @@
 package chen.gong.topcharts;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder xmlResult = new StringBuilder();
             try {
                 URL url = new URL(urlPath);
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();//Where missing-Internet-Permission error really occurs
                 int response = connection.getResponseCode();
                 Log.d(TAG, "downloadXML: The repsonse code was " + response);
                 InputStream inputStream = connection.getInputStream();
@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG,"downloadXML: Invalid URL " + e.getMessage());
             } catch(IOException e){
                 Log.e(TAG, "downloadURL: IO Exception reading data: " + e.getMessage());
+            } catch(SecurityException e){
+                Log.e(TAG,"downloadXML: Security Exception. Needs permission?" + e.getMessage());
+                e.printStackTrace();
             }
             return null;//If null return, prompt error.
         }
