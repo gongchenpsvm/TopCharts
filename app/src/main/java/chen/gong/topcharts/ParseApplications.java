@@ -33,10 +33,10 @@ public class ParseApplications {
             factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
             xpp.setInput(new StringReader(xmlData));
-            int eventType = xpp.getEventType();
+            int eventType = xpp.getEventType();//Determine the current state of a parser
             while(eventType != XmlPullParser.END_DOCUMENT){//Extract
                 String tagName = xpp.getName();//tagName can be null, if parser not in a tag,
-                switch (eventType){
+                switch (eventType){//<tag> TEXT </tag>
                     case XmlPullParser.START_TAG:
                         Log.d(TAG, "parse: Starting tag for " + tagName);
                         if("entry".equalsIgnoreCase(tagName)){
@@ -48,7 +48,7 @@ public class ParseApplications {
                         textValue = xpp.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        Log.d(TAG, "parse: Starting tag for " + tagName);
+                        Log.d(TAG, "parse: Ending tag for " + tagName);
                         if(inEntry) {//Check pullParser is inside an entry tag
                             if ("entry".equalsIgnoreCase(tagName)) {//Call method on String
                                 applications.add(currentRecord);
@@ -68,7 +68,7 @@ public class ParseApplications {
                         break;
                     default://Nothing to do
                 }
-                eventType = xpp.next();
+                eventType = xpp.next(); //next() gets <> or </>. Then getName() gets tag name.
             }
             for (FeedEntry app : applications){
                 Log.d(TAG, "************");

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private class DownloadData extends AsyncTask<String, Void, String>{
         private static final String TAG = "DownloadData";
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s) {//s here is rssFeed
             super.onPostExecute(s);
             Log.d(TAG,"onPostExecute: parameter is " + s);
             ParseApplications parseApplications = new ParseApplications();
