@@ -35,16 +35,30 @@ public class FeedAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = layoutInflater.inflate(layoutResource, parent, false);
-        TextView tvName = (TextView)view.findViewById(R.id.tvName);
-        TextView tvArtist = (TextView)view.findViewById(R.id.tvArtist);
-        TextView tvSummary = (TextView)view.findViewById(R.id.tvSummary);
+        ViewHolder viewHolder;
+        if (convertView == null){//Inflate at the beginning
+            convertView = layoutInflater.inflate(layoutResource, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);//Store a reference at the otherwise unused tag
+        } else{
+            viewHolder = (ViewHolder)convertView.getTag();
+        }
 
         FeedEntry currentApp = applications.get(position);
 
-        tvName.setText(currentApp.getName());
-        tvArtist.setText(currentApp.getArtist());
-        tvSummary.setText(currentApp.getSummary());
-        return view;
+        viewHolder.tvName.setText(currentApp.getName());
+        viewHolder.tvArtist.setText(currentApp.getArtist());
+        viewHolder.tvSummary.setText(currentApp.getSummary());
+        return convertView;
+    }
+    private class ViewHolder {
+        final TextView tvName;
+        final TextView tvArtist;
+        final TextView tvSummary;
+        ViewHolder(View v){
+            this.tvName = (TextView)v.findViewById(R.id.tvName);
+            this.tvArtist = (TextView)v.findViewById(R.id.tvArtist);
+            this.tvSummary = (TextView)v.findViewById(R.id.tvSummary);
+        }
     }
 }
