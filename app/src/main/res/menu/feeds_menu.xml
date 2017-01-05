@@ -8,4 +8,14 @@
         android:id="@+id/menuPaid" />
     <item android:title="Songs"
         android:id="@+id/menuSongs" />
+    <group android:id="@+id/mnugrpLimit"
+        android:checkableBehavior="single">
+        <item android:title="TOP 10"
+            android:id="@+id/menu10"
+            android:checked="true" />
+        <item android:title="TOP 25"
+            android:id="@+id/menu25" />
+    </group>
+    <item android:title="Refresh"
+        android:id="@+id/menuRefresh" />
 </menu>
