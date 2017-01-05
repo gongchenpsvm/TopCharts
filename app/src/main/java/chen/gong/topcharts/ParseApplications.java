@@ -1,7 +1,5 @@
 package chen.gong.topcharts;
 
-import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -38,7 +36,7 @@ public class ParseApplications {
                 String tagName = xpp.getName();//tagName can be null, if parser not in a tag,
                 switch (eventType){//<tag> TEXT </tag>
                     case XmlPullParser.START_TAG:
-                        Log.d(TAG, "parse: Starting tag for " + tagName);
+//                        Log.d(TAG, "parse: Starting tag for " + tagName);
                         if("entry".equalsIgnoreCase(tagName)){
                             inEntry = true;
                             currentRecord = new FeedEntry();
@@ -48,7 +46,7 @@ public class ParseApplications {
                         textValue = xpp.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        Log.d(TAG, "parse: Ending tag for " + tagName);
+//                        Log.d(TAG, "parse: Ending tag for " + tagName);
                         if(inEntry) {//Check pullParser is inside an entry tag
                             if ("entry".equalsIgnoreCase(tagName)) {//Call method on String
                                 applications.add(currentRecord);
@@ -70,10 +68,10 @@ public class ParseApplications {
                 }
                 eventType = xpp.next(); //next() gets <> or </>. Then getName() gets tag name.
             }
-            for (FeedEntry app : applications){
-                Log.d(TAG, "************");
-                Log.d(TAG,app.toString());
-            }
+//            for (FeedEntry app : applications){
+//                Log.d(TAG, "************");
+//                Log.d(TAG,app.toString());
+//            }
 
         }catch (Exception e){
             status = false;
